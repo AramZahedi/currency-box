@@ -17,11 +17,17 @@ class Crawler
     const CRAWL_URL = 'https://www.tgju.org/currency';
 
     /**
+     * The crawler object that is in charge
+     * of fetching the website contents
+     *
      * @var DomCrawler
      */
     protected $crawler;
 
     /**
+     * The extracted currencies and rates after the
+     * crawling is finished
+     *
      * @var array
      */
     protected $currencies = [];
