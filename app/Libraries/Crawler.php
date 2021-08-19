@@ -2,7 +2,9 @@
 
 namespace App\Libraries;
 
+use App\Models\Rate;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\DomCrawler\Crawler as DomCrawler;
 use Throwable;
@@ -48,9 +50,12 @@ class Crawler
     }
 
     /**
-     * Content Crawler
+     * Run the crawler to crawl the website, collect
+     * currency rates and store them in the database
+     *
+     * @return void
      */
-    public function getCrawlerContent()
+    public function run()
     {
         try {
             $this->crawler = $this->crawl();
@@ -66,7 +71,7 @@ class Crawler
      * Crawl the url and return the response
      *
      * @return DomCrawler
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
     public function crawl()
     {
@@ -87,13 +92,20 @@ class Crawler
      */
     protected function process()
     {
+        /*
+         * First try to extract each rate from the
+         * target website
+         */
         $this->crawler->filter('table.market-table')
             ->each(function (DomCrawler $node, $i) {
                 $this->extractRates($node);
             });
 
-        // TODO: store in the database instead of logging
-        Log::info(print_r($this->currencies, true));
+        /*
+         * Then create rates for each currency
+         * based on the crawled prices
+         */
+        $this->createRates();
     }
 
     /**
@@ -114,39 +126,81 @@ class Crawler
      */
     private function extractRates($node)
     {
-        if (
-            !isset($this->currencies['usd'])
-            && $this->hasContent($usd = $node->filter('[data-market-row="price_dollar_rl"]'))
-        ) {
-            $this->currencies['usd'] = $usd->attr('data-price');
-        }
+        foreach (self::currencies() as $currency) {
+            /*
+             * Check if currency has already been added to
+             * the currencies array and skip the current time
+             * if it has
+             */
+            $alreadyAdded = isset($this->currencies[$currency->name]);
 
-        if (
-            !isset($this->currencies['eur'])
-            && $this->hasContent($eur = $node->filter('[data-market-row="price_eur"]'))
-        ) {
-            $this->currencies['eur'] = $eur->attr('data-price');
-        }
+            if ($alreadyAdded) continue;
 
-        if (
-            !isset($this->currencies['gbp'])
-            && $this->hasContent($gbp = $node->filter('[data-market-row="price_gbp"]'))
-        ) {
-            $this->currencies['gbp'] = $gbp->attr('data-price');
-        }
+            /*
+             * Then try to get the price from the container box
+             * inside the prices table for the given currency
+             */
+            if ($this->hasContent($element = $node->filter($currency->attribute))) {
+                $price = $element->attr('data-price');
 
-        if (
-            !isset($this->currencies['aed'])
-            && $this->hasContent($aed = $node->filter('[data-market-row="price_aed"]'))
-        ) {
-            $this->currencies['aed'] = $aed->attr('data-price');
-        }
+                /*
+                 * Skip if the price is not valid or it's empty
+                 */
+                if (!$price) continue;
 
-        if (
-            !isset($this->currencies['cny'])
-            && $this->hasContent($cny = $node->filter('[data-market-row="price_cny"]'))
-        ) {
-            $this->currencies['cny'] = $cny->attr('data-price');
+                /*
+                 * Otherwise add it to the currencies list to create
+                 * rate records for in the database later
+                 */
+                $price = filter_var($price, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                $price = filter_var($price, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_THOUSAND);
+
+                $this->currencies[$currency->name] = $price;
+            }
+        }
+    }
+
+    /**
+     * Get the currencies details array
+     *
+     * @return array
+     */
+    public static function currencies()
+    {
+        return [
+            (object)[
+                'name' => Rate::CURRENCY_US_DOLLAR,
+                'attribute' => '[data-market-row="price_dollar_rl"]'
+            ],
+            (object)[
+                'name' => Rate::CURRENCY_EURO,
+                'attribute' => '[data-market-row="price_eur"]'
+            ],
+            (object)[
+                'name' => Rate::CURRENCY_UK_POUND,
+                'attribute' => '[data-market-row="price_gbp"]'
+            ],
+            (object)[
+                'name' => Rate::CURRENCY_UAE_DIRHAM,
+                'attribute' => '[data-market-row="price_aed"]'
+            ],
+            (object)[
+                'name' => Rate::CURRENCY_CN_YUAN,
+                'attribute' => '[data-market-row="price_cny"]'
+            ],
+        ];
+    }
+
+    /**
+     * Create rate records based on the extracted prices
+     * and currencies
+     *
+     * @return void
+     */
+    public function createRates()
+    {
+        foreach ($this->currencies as $currency => $price) {
+            Rate::createRate($currency, $price);
         }
     }
 }

@@ -31,6 +31,6 @@ class CrawlRates implements ShouldQueue
     public function handle()
     {
         Crawler::instance()
-            ->getCrawlerContent();
+            ->run();
     }
 }
