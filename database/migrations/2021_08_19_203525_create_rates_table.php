@@ -22,6 +22,8 @@ class CreateRatesTable extends Migration
             $table->double('price');
 
             $table->timestamps();
+
+            $table->index('created_at');
         });
     }
 
