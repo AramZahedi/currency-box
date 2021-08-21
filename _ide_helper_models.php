@@ -12,6 +12,29 @@
 
 namespace App\Models{
 /**
+ * Class Rate
+ *
+ * @package App\Models
+ * @method Builder|self currency
+ * @property int $id
+ * @property string $currency
+ * @property float $price
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|Rate newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Rate newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Rate query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Rate whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Rate whereCurrency($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Rate whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Rate wherePrice($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Rate whereUpdatedAt($value)
+ */
+	class Rate extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
  * App\Models\User
  *
  * @property int $id

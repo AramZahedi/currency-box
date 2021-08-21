@@ -2,9 +2,16 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Rate
+ * @package App\Models
+ *
+ * @method Builder|self currency($currency)
+ */
 class Rate extends Model
 {
     use HasFactory;
@@ -40,5 +47,33 @@ class Rate extends Model
             'currency' => $currency,
             'price' => $price
         ]);
+    }
+
+    /**
+     * Get the available currencies
+     *
+     * @return string[]
+     */
+    public static function currencies()
+    {
+        return [
+            self::CURRENCY_US_DOLLAR,
+            self::CURRENCY_CN_YUAN,
+            self::CURRENCY_UAE_DIRHAM,
+            self::CURRENCY_UK_POUND,
+            self::CURRENCY_EURO
+        ];
+    }
+
+    /**
+     * Apply currency on rate query
+     *
+     * @param Builder $query
+     * @param string $currency
+     * @return Builder
+     */
+    public function scopeCurrency($query, $currency)
+    {
+        return $query->where('currency', $currency);
     }
 }

@@ -4,20 +4,21 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\Rate;
-use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Response;
 
-class DashboardController extends Controller
+class DashboardSummaryController extends Controller
 {
     /**
-     * Show the application index page
+     * Get the dashboard summary controller
      *
-     * @return Renderable
+     * @return ResponseFactory|Response
      */
-    public function index()
+    public function summary()
     {
-        return view('dashboard.index.index', [
+        return $this->dataResponse([
             'usd' => $this->getUsd(),
             'eur' => $this->getEur(),
             'gbp' => $this->getGbp(),
