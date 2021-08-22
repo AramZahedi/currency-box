@@ -1,14 +1,13 @@
 <?php
 
+use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Dashboard\DashboardSummaryController;
+
 /*
  **************************************************
  *                 User Dashboard
  **************************************************
  */
-
-use App\Http\Controllers\Dashboard\DashboardController;
-use App\Http\Controllers\Dashboard\DashboardSummaryController;
-
 Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     /*
      **************************************************
