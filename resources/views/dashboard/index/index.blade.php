@@ -204,5 +204,13 @@
                 </div>
             </div>
         </div>
+
+        <div class="mt-3"></div>
+
+        <div class="w-100">
+            <currencies-chart today="{{ now()->subDays(25)->format('Y-M-d') }}">
+
+            </currencies-chart>
+        </div>
     </div>
 @endsection
