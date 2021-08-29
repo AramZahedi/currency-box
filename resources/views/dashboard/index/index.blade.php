@@ -25,7 +25,7 @@
                         @if ($usd)
                             <span class="font-weight-bold"
                                   style="font-size: 1.4rem; font-family: 'Nunito', 'tahoma', sans-serif">
-                                {{ number_format($usd->price) }}
+                                {{ number_format($usd->price / 10) }}
                             </span>
                             <br>
                             Tomans
@@ -65,7 +65,7 @@
                         @if ($eur)
                             <span class="font-weight-bold"
                                   style="font-size: 1.4rem; font-family: 'Nunito', 'tahoma', sans-serif">
-                                {{ number_format($eur->price) }}
+                                {{ number_format($eur->price / 10) }}
                             </span>
                             <br>
                             Tomans
@@ -105,7 +105,7 @@
                         @if ($gbp)
                             <span class="font-weight-bold"
                                   style="font-size: 1.4rem; font-family: 'Nunito', 'tahoma', sans-serif">
-                                {{ number_format($gbp->price) }}
+                                {{ number_format($gbp->price / 10) }}
                             </span>
                             <br>
                             Tomans
@@ -145,7 +145,7 @@
                         @if ($aed)
                             <span class="font-weight-bold"
                                   style="font-size: 1.4rem; font-family: 'Nunito', 'tahoma', sans-serif">
-                                {{ number_format($aed->price) }}
+                                {{ number_format($aed->price / 10) }}
                             </span>
                             <br>
                             Tomans
@@ -185,7 +185,7 @@
                         @if ($cny)
                             <span class="font-weight-bold"
                                   style="font-size: 1.4rem; font-family: 'Nunito', 'tahoma', sans-serif">
-                                {{ number_format($cny->price) }}
+                                {{ number_format($cny->price / 10) }}
                             </span>
                             <br>
                             Tomans
