@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\Dashboard\ChartDataController;
 use App\Http\Controllers\Dashboard\DashboardController;
-use App\Http\Controllers\Dashboard\DashboardSummaryController;
 
 /*
  **************************************************
