@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ChartDataRequest;
+use App\Http\Requests\Dashboard\ChartDataRequest;
 use App\Models\Rate;
 use Carbon\Carbon;
 use Illuminate\Contracts\Routing\ResponseFactory;
