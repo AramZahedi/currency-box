@@ -19,7 +19,7 @@ class CreateRatesTable extends Migration
             $table->string('currency')
                 ->index();
 
-            $table->double('price');
+            $table->integer('price');
 
             $table->timestamps();
 
