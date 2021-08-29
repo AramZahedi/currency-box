@@ -22,24 +22,14 @@ class ChartDataController extends Controller
     public function index(ChartDataRequest $request)
     {
         return $this->dataResponse([
-            'currencies' => $this->getCurrencies($request),
+            'currencies' => $this->getValues($request),
             'labels' => $this->getLabels($request)
         ]);
     }
 
     /**
-     * Get the currencies data based on the given filters
-     *
-     * @param ChartDataRequest $request
-     * @return array
-     */
-    protected function getCurrencies($request)
-    {
-        return $this->getValues($request);
-    }
-
-    /**
-     * Get the chart labels based on the provided filters
+     * Get the chart labels based on the provided
+     * date in the request
      *
      * @param ChartDataRequest $request
      * @return array
@@ -67,7 +57,7 @@ class ChartDataController extends Controller
 
     /**
      * Get rate for the given currency
-     * based on the provided from and to
+     * based on the provided date in the request
      *
      * @param ChartDataRequest $request
      * @return array
