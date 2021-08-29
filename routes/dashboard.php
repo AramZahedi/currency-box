@@ -20,14 +20,6 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
 
     /*
      **************************************************
-     *                Dashboard Summary
-     **************************************************
-     */
-    Route::get('/summary', [DashboardSummaryController::class, 'summary'])
-        ->name('dashboard.summary');
-
-    /*
-     **************************************************
      *                 Dashboard Chart
      **************************************************
      */
