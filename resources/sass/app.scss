@@ -9,3 +9,45 @@
 
 // Font Awesome
 @import '~font-awesome/scss/font-awesome';
+
+@import "~air-datepicker/dist/css/datepicker.css";
+
+// Loading Overlay
+@import './loading';
+
+$snotify-error-color: white !default;
+$snotify-error: white !default;
+
+$snotify-success-color: white !default;
+$snotify-success: white !default;
+
+@import "~vue-snotify/styles/material";
+
+.snotify {
+    text-align: justify !important;
+    z-index: 10000;
+}
+
+@media(min-width: 900px) {
+    .snotify {
+        width: 350px;
+    }
+}
+
+.snotifyToast__title {
+    font-size: 1.2em !important;
+    font-weight: bold;
+}
+
+.snotifyToast__inner {
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+}
+
+.swal2-modal {
+    border-radius: 1rem !important;
+}
+
+.swal2-icon .swal2-icon-content {
+    transform: translateY(7px) !important;
+}

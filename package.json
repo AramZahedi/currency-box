@@ -25,9 +25,14 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
+        "air-datepicker": "^2.2.3",
+        "chart.js": "^3.5.1",
         "font-awesome": "^4.7.0",
         "i": "^0.3.6",
+        "md5": "^2.3.0",
         "npm": "^7.21.0",
+        "sweetalert2": "^11.1.4",
+        "vue-ripple-directive": "^2.0.1",
         "vue-snotify": "^3.2.1"
     }
 }
