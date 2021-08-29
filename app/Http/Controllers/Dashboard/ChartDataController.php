@@ -47,7 +47,8 @@ class ChartDataController extends Controller
             : now()->startOfDay();
 
         for ($i = 0; $i < 24; $i++) {
-            $labels[] = $time->toTimeString('minute');
+            $labels[] = $time->format('ga') . ' - '
+                . (clone $time)->addHour()->format('ga');
 
             $time->addHour();
         }
