@@ -21,6 +21,8 @@
 </head>
 <body>
     <div id="app">
+        <vue-snotify></vue-snotify>
+        <loading></loading>
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container-fluid px-md-0">
                 <a class="navbar-brand" href="{{ url('/') }}">
