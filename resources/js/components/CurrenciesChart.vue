@@ -196,6 +196,7 @@ export default {
                     todayButton: new Date(this.today),
                     dateFormat: 'yyyy-M-dd',
                     autoClose: true,
+                    toggleSelected: false,
                     onSelect: (formatted_date) => {
                         return this.selectNewDate(formatted_date);
                     }
